@@ -83,8 +83,10 @@ func New(opts ...func([]Card) []Card) []Card {
 // 	return sort.Reverse(cards)
 // }
 
-//Filter filters out specific cards.
-func Filter(rank ...Rank) func([]Card) []Card {
+//FilterRank filters out specific Ranks.
+//Both int and the name of the rank can be used
+//Ex Ace or 1, 11 or Jack etc. can be used.
+func FilterRank(rank ...Rank) func([]Card) []Card {
 	return func(card []Card) []Card {
 		i := 0
 		for _, r := range rank { //one
@@ -98,6 +100,46 @@ func Filter(rank ...Rank) func([]Card) []Card {
 			card = card[:i]
 		}
 		return card[:i]
+	}
+}
+
+//FilterSuit filters out specific suits.
+//Both int and the name of the suit can be used
+//However, the name of the suit should be used to avoid confusion
+//Ex Both FilterSuit(Heart) and FilterSuit(3) removes all Heart cards
+func FilterSuit(suit ...Suit) func([]Card) []Card {
+	return func(card []Card) []Card {
+		i := 0 
+		for _, s := range suit {
+			i = 0
+			for _, c := range card {
+				if s != c.Suit {
+					card[i] = c
+					i++
+				}
+			}
+			card = card[:i]
+		}
+		return card[:i]
+	}
+}
+
+//FilterSpecific filters out specific cards 
+//ex FilterSpecific(Card{Heart, Ace}) filters out Ace of Hearts
+func FilterSpecific(card ...Card) func([]Card) []Card {
+	return func(deck []Card) []Card {
+		i := 0 
+		for _, c := range card {
+			i = 0
+			for _, d := range deck {
+				if c != d {
+					deck[i] = d
+					i++
+				}
+			}
+			deck = deck[:i]
+		}
+		return deck[:i]
 	}
 }
 
