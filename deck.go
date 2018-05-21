@@ -43,6 +43,8 @@ const (
 	Club
 	Heart
 	Joker
+	//Red //Diamond, Heart //TODO: add a mechanism for filtering out a color
+	//Black //Spade, Club
 )
 
 func (c Card) String() string {
