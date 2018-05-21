@@ -72,6 +72,7 @@ func New(opts ...func([]Card) []Card) []Card {
 			})
 		}
 	}
+
 	for _, opt := range opts {
 		deck = opt(deck)
 	}
@@ -81,6 +82,22 @@ func New(opts ...func([]Card) []Card) []Card {
 // func ReverseSort(cards []Card) []Card {
 // 	return sort.Reverse(cards)
 // }
+
+//Jokers is a function that adds an arbritary number of Joker cards
+//to the end of the deck.
+//If You want to a shuffled deck, make sure to add Jokers(n) before Shuffle 
+//as a parameter to the New() function.
+func Jokers(n int) func([]Card) []Card {
+
+	return func(c []Card) []Card {
+		for i := 0; i < n; i++ {
+			c = append(c, Card{
+				Suit: Joker,
+			})
+		}
+		return c
+	}
+}
 
 //Shuffle method shuffles the deck ([]Card) in a random order.
 //The order will be different everytime its run.

@@ -26,7 +26,7 @@ func TestNew(t *testing.T) {
 }
 
 func TestDefaultSort(t *testing.T) {
-	cards := New(Shuffle)
+	cards := New(Shuffle, Jokers(4))
 	//exp := Card{Rank: Ace, Suit: Spade}
 	// if cards[0] != exp {
 	// 	t.Error("Expected Ace of Spades as first card. Recieved: ", cards[0])
