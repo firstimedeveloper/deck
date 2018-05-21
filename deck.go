@@ -4,7 +4,9 @@ package deck
 
 import (
 	"fmt"
+	"math/rand"
 	"sort"
+	"time"
 )
 
 const (
@@ -80,6 +82,16 @@ func New(opts ...func([]Card) []Card) []Card {
 // 	return sort.Reverse(cards)
 // }
 
+func Shuffle(cards []Card) []Card {
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	var newDeck []Card
+	randomNum := r.Perm(len(cards))
+	for i := 0; i < len(cards); i++ {
+		newDeck = append(newDeck, cards[randomNum[i]])
+	}
+	return newDeck
+}
+
 func DefaultSort(cards []Card) []Card {
 	sort.Slice(cards, Less(cards))
 	return cards
@@ -90,7 +102,6 @@ func Less(cards []Card) func(i, j int) bool {
 		return absRank(cards[i]) < absRank(cards[j])
 	}
 }
-
 
 func absRank(c Card) int {
 	return int(c.Suit)*int(NUMOFRANKS) + int(c.Rank)
