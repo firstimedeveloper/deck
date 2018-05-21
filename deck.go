@@ -83,9 +83,27 @@ func New(opts ...func([]Card) []Card) []Card {
 // 	return sort.Reverse(cards)
 // }
 
+//Filter filters out specific cards.
+func Filter(rank ...Rank) func([]Card) []Card {
+	return func(card []Card) []Card {
+		i := 0
+		for _, r := range rank { //one
+			i = 0
+			for _, c := range card {
+				if r != c.Rank {
+					card[i] = c
+					i++
+				}
+			}
+			card = card[:i]
+		}
+		return card[:i]
+	}
+}
+
 //Jokers is a function that adds an arbritary number of Joker cards
 //to the end of the deck.
-//If You want to a shuffled deck, make sure to add Jokers(n) before Shuffle 
+//If You want to a shuffled deck, make sure to add Jokers(n) before Shuffle
 //as a parameter to the New() function.
 func Jokers(n int) func([]Card) []Card {
 
