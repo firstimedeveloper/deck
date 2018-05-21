@@ -26,13 +26,16 @@ func TestNew(t *testing.T) {
 }
 
 func TestDefaultSort(t *testing.T) {
-	cards := New(FilterSpecific(Card{Heart,Ace}))
+	cards := New(MultipleDecks(2))
 	//exp := Card{Rank: Ace, Suit: Spade}
 	// if cards[0] != exp {
 	// 	t.Error("Expected Ace of Spades as first card. Recieved: ", cards[0])
 	// }
 	for _, card := range cards {
 		fmt.Println(card)
+	}
+	if len(cards) != 52*2 {
+		t.Error("Wrong number of cards in the new multipledeck")
 	}
 
 }

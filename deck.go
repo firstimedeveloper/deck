@@ -81,6 +81,19 @@ func New(opts ...func([]Card) []Card) []Card {
 	return deck
 }
 
+//MultipleDecks makes a single deck composed of multiple decks.
+func MultipleDecks(n int) func([]Card) []Card {
+
+	return func(deck []Card) []Card {
+		for i := 1; i < n; i++ {
+			for _, c := range deck {
+				deck = append(deck, c)
+			}
+		}
+		return deck
+	}
+}
+
 // func ReverseSort(cards []Card) []Card {
 // 	return sort.Reverse(cards)
 // }
@@ -111,7 +124,7 @@ func FilterRank(rank ...Rank) func([]Card) []Card {
 //Ex Both FilterSuit(Heart) and FilterSuit(3) removes all Heart cards
 func FilterSuit(suit ...Suit) func([]Card) []Card {
 	return func(card []Card) []Card {
-		i := 0 
+		i := 0
 		for _, s := range suit {
 			i = 0
 			for _, c := range card {
@@ -126,11 +139,11 @@ func FilterSuit(suit ...Suit) func([]Card) []Card {
 	}
 }
 
-//FilterSpecific filters out specific cards 
+//FilterSpecific filters out specific cards
 //ex FilterSpecific(Card{Heart, Ace}) filters out Ace of Hearts
 func FilterSpecific(card ...Card) func([]Card) []Card {
 	return func(deck []Card) []Card {
-		i := 0 
+		i := 0
 		for _, c := range card {
 			i = 0
 			for _, d := range deck {
