@@ -82,6 +82,8 @@ func New(opts ...func([]Card) []Card) []Card {
 // 	return sort.Reverse(cards)
 // }
 
+//Shuffle method shuffles the deck ([]Card) in a random order.
+//The order will be different everytime its run.
 func Shuffle(cards []Card) []Card {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	var newDeck []Card
@@ -92,11 +94,16 @@ func Shuffle(cards []Card) []Card {
 	return newDeck
 }
 
+//DefaultSort is the default way most just-bought cards come in.
+//The order is Spade, Diamond, Club, and Heart.
+//Ex. Spade Ace-King, Diamond Ace-King ... in that order.
 func DefaultSort(cards []Card) []Card {
 	sort.Slice(cards, Less(cards))
 	return cards
 }
 
+//Less function compares the absRank of two cards, returns true if it's in order
+//(Meaning the first card is smaller than the second one)
 func Less(cards []Card) func(i, j int) bool {
 	return func(i, j int) bool {
 		return absRank(cards[i]) < absRank(cards[j])
